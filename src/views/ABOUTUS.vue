@@ -7,15 +7,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import "vue-croppa/dist/vue-croppa.css";
-import { readUploadedFileAsBase64 } from "@/util/readBase64";
-import Downloader from "@/components/Downloader.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import 'vue-croppa/dist/vue-croppa.css';
+import { readUploadedFileAsBase64 } from '@/util/readBase64';
+import Downloader from '@/components/Downloader.vue';
 
 @Component({
     components: {
-        Downloader
-    }
+        Downloader,
+    },
 })
 export default class Home extends Vue {
     public namesG: Array<[number, number]> = [[1440, 900], [540, 960]];

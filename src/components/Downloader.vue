@@ -1,19 +1,29 @@
 <template>
     <div class="home">
-        <h1>{{title}}</h1>
-        <input @change="selectedFile" type="file" name="file" />
-        <button @click="download">DOWNLOAD ALL</button>
-        <div v-if="imgSrc">
-            <div v-for="(val, idx) in names" :key="idx">
-                <p>{{val[0]}} x {{val[1]}}</p>
-                <croppa
-                    class="c1"
-                    v-model="croppa[idx]"
-                    :width="val[0]"
-                    :height="val[1]"
-                    prevent-white-space
-                    :initial-image="imgSrc"
-                ></croppa>
+        <div>
+            <h1>{{title}}</h1>
+        </div>
+        <div v-if="isDownloading">
+            <p>DOWNLOADING......</p>
+        </div>
+        <div v-show="!isDownloading">
+            <input @change="selectedFile" type="file" name="file" />
+            <span v-if="imgSrc">
+                <button @click="download">DOWNLOAD ALL</button>
+                <button @click="downloadZip">DOWNLOAD ZIP</button>
+            </span>
+            <div v-if="imgSrc">
+                <div v-for="(val, idx) in names" :key="idx">
+                    <p>{{val[0]}} x {{val[1]}}</p>
+                    <croppa
+                        class="c1"
+                        v-model="croppa[idx]"
+                        :width="val[0]"
+                        :height="val[1]"
+                        prevent-white-space
+                        :initial-image="imgSrc"
+                    ></croppa>
+                </div>
             </div>
         </div>
     </div>
@@ -23,6 +33,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import 'vue-croppa/dist/vue-croppa.css';
 import { readUploadedFileAsBase64 } from '@/util/readBase64';
+import { ziped } from '@/util/zlib';
 
 @Component({
     components: {},
@@ -30,17 +41,18 @@ import { readUploadedFileAsBase64 } from '@/util/readBase64';
 export default class Home extends Vue {
     public imgSrc: string | null = null;
     public name: string | null = null;
+    public isDownloading: boolean = false;
     public croppa: [any, any, any, any, any, any, any, any, any, any] = [
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
     ];
     @Prop() public names!: Array<[number, number]>;
     @Prop() public title!: string;
@@ -54,19 +66,43 @@ export default class Home extends Vue {
     }
     public download() {
         this.croppa.map((item) => {
+            if (!item.height) {
+                return;
+            }
             const uri = item.generateDataUrl();
             const idx = this.croppa.indexOf(item);
-            const name = `${this.title}_${this.name}_${this.names[idx][0]}x${this.names[idx][1]}.jpeg`;
+            const name = `${this.title}_${this.name}_${this.names[idx][0]}x${this.names[idx][1]}.png`;
             this.downloadURI(uri, name);
         });
     }
-    public downloadURI(uri: string, name: string) {
+    public async downloadZip() {
+        this.isDownloading = true;
+        await this.zipped();
+        this.isDownloading = false;
+    }
+    public async downloadURI(uri: string, name: string) {
         const link = document.createElement('a');
         link.download = name;
         link.href = uri;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+    public async zipped() {
+        const files: Array<{ uri: string; name: string }> = [];
+        this.croppa.map((item) => {
+            if (!item.height) {
+                return;
+            }
+            const uri = item.generateDataUrl();
+            const idx = this.croppa.indexOf(item);
+            const name = `${this.title}_${this.name}_${this.names[idx][0]}x${this.names[idx][1]}.png`;
+            files.push({
+                uri,
+                name,
+            });
+        });
+        const zip = await ziped(files, this.name!);
     }
 }
 </script>
