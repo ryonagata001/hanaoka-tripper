@@ -1,7 +1,9 @@
 <template>
     <div class="home">
         <h1>HANAOKA TRIPPER(NEWS/MEDIA)</h1>
-        <downloader :names="namesA" title="A"></downloader>
+        <downloader :names="namesB" title="B"></downloader>
+        <downloader :names="namesC" title="C"></downloader>
+        <downloader :names="namesD" title="D"></downloader>
     </div>
 </template>
 
@@ -17,11 +19,13 @@ import Downloader from '@/components/Downloader.vue';
     },
 })
 export default class Home extends Vue {
-    public namesA: [
-        [number, number],
-        [number, number],
-        [number, number],
-        [number, number]
-    ] = [[970, 580], [630, 380], [730, 390], [360, 240]];
+    public namesB: Array<[number, number]> = [[960, 720]];
+    public namesC: Array<[number, number]> = [
+        [280, 460],
+        [630, 630],
+        [210, 470],
+        [630, 315],
+    ];
+    public namesD: Array<[number, number]> = [[630, 830]];
 }
 </script>

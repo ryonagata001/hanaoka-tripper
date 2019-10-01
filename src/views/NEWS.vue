@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <h1>HANAOKA TRIPPER(NEWS/MEDIA)</h1>
-        <downloader :names="namesA" title="A"></downloader>
+        <downloader :names="names" title="A"></downloader>
     </div>
 </template>
 
@@ -17,7 +17,7 @@ import Downloader from '@/components/Downloader.vue';
     },
 })
 export default class Home extends Vue {
-    public namesA: [
+    public names: [
         [number, number],
         [number, number],
         [number, number],
