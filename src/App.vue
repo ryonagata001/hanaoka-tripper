@@ -6,7 +6,7 @@
         <br />
         <router-link :to="{name: 'people'}">PEOPLE</router-link>
         <br />
-        <router-link :to="{name: 'about us'}">ABOUT US</router-link>
+        <router-link :to="{name: 'about'}">ABOUT US</router-link>
         <br />
         <router-link :to="{name: 'top'}">TOP</router-link>
         <router-view />
