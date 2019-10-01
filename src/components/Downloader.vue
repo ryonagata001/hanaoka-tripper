@@ -9,8 +9,7 @@
         <div v-show="!isDownloading">
             <input @change="selectedFile" type="file" name="file" />
             <span v-if="imgSrc">
-                <button @click="downloadZip">DOWNLOAD ZIP(永田推奨)</button>
-                <button @click="download">DOWNLOAD ALL</button>
+                <button @click="downloadZip">DOWNLOAD ZIP</button>
             </span>
             <div v-if="imgSrc">
                 <div v-for="(val, idx) in names" :key="idx">
