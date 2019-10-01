@@ -22,6 +22,7 @@
                         :height="val[1]"
                         prevent-white-space
                         :initial-image="imgSrc"
+                        :quality="1"
                     ></croppa>
                 </div>
             </div>
