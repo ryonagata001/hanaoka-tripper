@@ -8,15 +8,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import "vue-croppa/dist/vue-croppa.css";
-import { readUploadedFileAsBase64 } from "@/util/readBase64";
-import Downloader from "@/components/Downloader.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import 'vue-croppa/dist/vue-croppa.css';
+import { readUploadedFileAsBase64 } from '@/util/readBase64';
+import Downloader from '@/components/Downloader.vue';
 
 @Component({
     components: {
-        Downloader
-    }
+        Downloader,
+    },
 })
 export default class Home extends Vue {
     public namesB: Array<[number, number]> = [[960, 720]];
@@ -24,7 +24,7 @@ export default class Home extends Vue {
         [280, 460],
         [630, 630],
         [210, 470],
-        [630, 315]
+        [630, 315],
     ];
     public namesD: Array<[number, number]> = [[630, 830]];
 }
